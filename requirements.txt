@@ -1,0 +1,9 @@
+fastapi==0.110.0
+sqlalchemy==2.0.x
+pydantic==2.x
+uvicorn==0.27.x
+pytest==9.0.2
+pytest-cov==7.0.0
+email-validator==2.x
+alembic==1.x
+pymysql==1.x
