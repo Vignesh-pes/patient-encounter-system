@@ -12,7 +12,8 @@ dependencies = [
     "sqlalchemy (>=2.0.46,<3.0.0)",
     "pymysql (>=1.1.2,<2.0.0)",
     "python-dotenv (>=1.2.1,<2.0.0)",
-    "alembic (>=1.18.3,<2.0.0)"
+    "alembic (>=1.18.3,<2.0.0)",
+    "email-validator (>=2.3.0,<3.0.0)"
 ]
 
 
@@ -36,4 +37,11 @@ description = "Production-grade medical backend system"
 
 packages = [
     { include = "src" }
+]
+
+[tool.coverage.run]
+omit = [
+    "src/main.py",
+    "src/database.py",
+    "src/__init__.py",
 ]
