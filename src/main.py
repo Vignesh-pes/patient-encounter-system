@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import date
+from datetime import datetime, time
 
 from database import get_db
 from schemas.patient import PatientCreate, PatientRead
@@ -91,12 +92,12 @@ def list_appointments(
 ):
     query = db.query(Appointment)
 
-    start = f"{date} 00:00:00"
-    end = f"{date} 23:59:59"
+    start_dt = datetime.combine(date, time.min)
+    end_dt = datetime.combine(date, time.max)
 
     query = query.filter(
-        Appointment.start_time >= start,
-        Appointment.start_time <= end,
+        Appointment.start_time >= start_dt,
+        Appointment.start_time <= end_dt,
     )
 
     if doctor_id:

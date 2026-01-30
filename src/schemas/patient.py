@@ -1,15 +1,20 @@
-from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional
 
 
-class PatientCreate(BaseModel):
-    first_name: str
-    last_name: str
+class PatientBase(BaseModel):
+    first_name: str = Field(..., min_length=2, max_length=100)
+    last_name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    phone: str | None = None
+    phone: Optional[str] = Field(None, max_length=20)
 
 
-class PatientRead(PatientCreate):
+class PatientCreate(PatientBase):
+    pass
+
+
+class PatientRead(PatientBase):
     id: int
-    created_at: datetime
-    updated_at: datetime
+
+    class Config:
+        from_attributes = True

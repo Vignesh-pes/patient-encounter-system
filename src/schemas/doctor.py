@@ -1,13 +1,19 @@
-from pydantic import BaseModel
-from datetime import datetime
+from pydantic import BaseModel, Field
+from typing import Optional
 
 
-class DoctorCreate(BaseModel):
-    full_name: str
-    specialization: str | None = None
+class DoctorBase(BaseModel):
+    full_name: str = Field(..., min_length=3, max_length=150)
+    specialization: Optional[str] = Field(None, max_length=100)
 
 
-class DoctorRead(DoctorCreate):
+class DoctorCreate(DoctorBase):
+    pass
+
+
+class DoctorRead(DoctorBase):
     id: int
     is_active: bool
-    created_at: datetime
+
+    class Config:
+        from_attributes = True
