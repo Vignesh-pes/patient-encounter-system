@@ -33,7 +33,7 @@ def test_get_patient_not_found(db_session):
 def test_create_patient_duplicate_email(db_session):
     data = PatientCreate(
         first_name="Vignesh",
-        last_name="J",
+        last_name="Vignesh",
         email="vignesh@test.com",
         phone="9999999999",
     )
