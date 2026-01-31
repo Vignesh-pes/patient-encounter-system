@@ -34,39 +34,41 @@ This project follows **real-world backend engineering standards**: clean archite
 - CI/CD ready with GitHub Actions
 
 ---
+## 📂 Project Structure
 
-## 🗂 Project Structure
+```text
 patient-encounter-system/
-│
 ├── src/
-│ ├── main.py # FastAPI application entrypoint
-│ ├── database.py # DB connection & session
-│ │
-│ ├── models/ # SQLAlchemy models
-│ │ ├── patient.py
-│ │ ├── doctor.py
-│ │ └── appointment.py
-│ │
-│ ├── schemas/ # Pydantic schemas
-│ │ ├── patient.py
-│ │ ├── doctor.py
-│ │ └── appointment.py
-│ │
-│ └── services/ # Business logic layer
-│ ├── patient_service.py
-│ ├── doctor_service.py
-│ └── appointment_service.py
+│   ├── main.py               
+│   ├── database.py            
+│   │
+│   ├── models/
+│   │   ├── patient.py
+│   │   ├── doctor.py
+│   │   └── appointment.py
+│   │
+│   ├── schemas/
+│   │   ├── patient.py
+│   │   ├── doctor.py
+│   │   └── appointment.py
+│   │
+│   └── services/
+│       ├── patient_service.py
+│       ├── doctor_service.py
+│       └── appointment_service.py
 │
-├── tests/ # Pytest test suite
-│ ├── conftest.py
-│ ├── test_patient_service.py
-│ ├── test_doctor_service.py
-│ ├── test_appointment_service.py
-│ └── test_appointment_model.py
+├── tests/
+│   ├── conftest.py
+│   ├── test_patient_service.py
+│   ├── test_doctor_service.py
+│   ├── test_appointment_service.py
+│   └── test_appointment_model.py
 │
 ├── requirements.txt
 ├── pyproject.toml
 └── README.md
+
+
 
 
 ---
