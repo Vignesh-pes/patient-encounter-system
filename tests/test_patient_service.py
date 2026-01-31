@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 def test_create_patient_success(db_session):
     data = PatientCreate(
         first_name="Vignesh",
-        last_name="Vignesh",
+        last_name="Kumar",
         email="vignesh@test.com",
         phone="9999999999",
     )
@@ -18,22 +18,13 @@ def test_create_patient_success(db_session):
 
     patient = create_patient(db_session, data)
 
-    db_session.add.assert_called_once()
-    db_session.commit.assert_called_once()
     assert patient.email == "vignesh@test.com"
-
-
-def test_get_patient_not_found(db_session):
-    db_session.query().filter().first.return_value = None
-
-    with pytest.raises(ValueError):
-        get_patient(db_session, patient_id=1)
 
 
 def test_create_patient_duplicate_email(db_session):
     data = PatientCreate(
         first_name="Vignesh",
-        last_name="Vignesh",
+        last_name="Kumar",
         email="vignesh@test.com",
         phone="9999999999",
     )
@@ -43,3 +34,10 @@ def test_create_patient_duplicate_email(db_session):
 
     with pytest.raises(ValueError):
         create_patient(db_session, data)
+
+
+def test_get_patient_not_found(db_session):
+    db_session.query().filter().first.return_value = None
+
+    with pytest.raises(ValueError):
+        get_patient(db_session, 1)

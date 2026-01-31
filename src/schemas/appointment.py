@@ -1,16 +1,15 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
 
 
 class AppointmentCreate(BaseModel):
-    patient_id: int
-    doctor_id: int
+    patient_id: int = Field(..., gt=0)
+    doctor_id: int = Field(..., gt=0)
     start_time: datetime
-    duration_minutes: int = Field(..., gt=0, le=240)
+    duration_minutes: int = Field(..., gt=0, le=480)
 
 
 class AppointmentRead(AppointmentCreate):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

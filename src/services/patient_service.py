@@ -1,11 +1,10 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-
 from models.patient import Patient
 
 
 def create_patient(db: Session, data):
-    patient = Patient(**data.dict())
+    patient = Patient(**data.model_dump())
 
     try:
         db.add(patient)

@@ -1,10 +1,9 @@
 from sqlalchemy.orm import Session
-
 from models.doctor import Doctor
 
 
 def create_doctor(db: Session, data):
-    doctor = Doctor(**data.dict())
+    doctor = Doctor(**data.model_dump())
     db.add(doctor)
     db.commit()
     db.refresh(doctor)

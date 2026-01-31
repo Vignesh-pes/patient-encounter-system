@@ -1,6 +1,7 @@
 import pytest
 from services.doctor_service import create_doctor, get_doctor
 from schemas.doctor import DoctorCreate
+from models.doctor import Doctor  # ✅ THIS WAS MISSING
 
 
 def test_create_doctor(db_session):
@@ -25,3 +26,18 @@ def test_get_doctor_not_found(db_session):
 
     with pytest.raises(ValueError):
         get_doctor(db_session, doctor_id=1)
+
+
+def test_get_doctor_success(db_session):
+    doctor = Doctor(
+        id=1,
+        full_name="Dr. House",
+        specialization="Diagnostics",
+    )
+
+    db_session.query().filter().first.return_value = doctor
+
+    result = get_doctor(db_session, doctor_id=1)
+
+    assert result.id == 1
+    assert result.full_name == "Dr. House"

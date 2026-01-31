@@ -1,10 +1,9 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class DoctorBase(BaseModel):
     full_name: str = Field(..., min_length=3, max_length=150)
-    specialization: Optional[str] = Field(None, max_length=100)
+    specialization: str | None = Field(default=None, max_length=100)
 
 
 class DoctorCreate(DoctorBase):
@@ -15,5 +14,4 @@ class DoctorRead(DoctorBase):
     id: int
     is_active: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
