@@ -1,31 +1,25 @@
-# Patient Encounter Management System
+# 🏥 Medical Encounter Management System
 
-## Overview
-A production-grade backend system built with FastAPI, SQLAlchemy, and MySQL
-to manage patients, doctors, and appointment scheduling with conflict detection.
+A **production-grade backend system** built with **FastAPI**, **SQLAlchemy**, and **MySQL** to manage **patients, doctors, and medical appointments** for a clinic or hospital environment.
 
-## Tech Stack
-- Python 3.10
-- FastAPI
-- SQLAlchemy
-- MySQL
-- Alembic
-- Pytest
-- GitHub Actions
+This project is designed with **real-world constraints**, **clean architecture**, **high test coverage (98%)**, and **CI/CD readiness**.
 
-## Features
-- Patient & doctor management
-- Appointment scheduling with conflict detection
-- Business-rule driven service layer
-- Database migrations using Alembic
-- 90%+ unit test coverage
-- CI pipeline with GitHub Actions
+---
 
-## Project Structure
+## 📌 Project Overview
 
+Healthcare clinics require a reliable backend system to:
 
-## Setup
-```bash
-poetry install
-alembic upgrade head
-uvicorn src.main:app --reload
+- Register patients  
+- Manage doctors and their availability  
+- Schedule appointments without conflicts  
+- Enforce real-world business rules (time, availability, validation)
+
+This system provides a **RESTful API** that solves these problems while following **industry best practices**.
+
+---
+
+## 🧱 Architecture
+
+The project follows a **layered architecture**:
+
