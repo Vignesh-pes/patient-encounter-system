@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 def test_create_patient_success(db_session):
     data = PatientCreate(
         first_name="Vignesh",
-        last_name="J",
+        last_name="Vignesh",
         email="vignesh@test.com",
         phone="9999999999",
     )

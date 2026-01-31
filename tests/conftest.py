@@ -1,9 +1,20 @@
+import sys
+from pathlib import Path
 import pytest
 from unittest.mock import MagicMock
+from datetime import datetime, timedelta, timezone
+
+# ✅ Ensure src/ is on PYTHONPATH BEFORE any app imports
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_PATH = PROJECT_ROOT / "src"
+
+if str(SRC_PATH) not in sys.path:
+    sys.path.insert(0, str(SRC_PATH))
+
+# ✅ Now imports will work
 from schemas.patient import PatientCreate
 from schemas.doctor import DoctorCreate
 from schemas.appointment import AppointmentCreate
-from datetime import datetime, timedelta, timezone
 
 
 @pytest.fixture
@@ -15,7 +26,7 @@ def db_session():
 def patient_data():
     return PatientCreate(
         first_name="Vignesh",
-        last_name="J",
+        last_name="Kumar",  # ✅ min_length >= 2
         email="vignesh@test.com",
         phone="9999999999",
     )
