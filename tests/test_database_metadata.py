@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine, inspect
-from src.database import Base
 
 
 def test_create_all_creates_expected_tables():
