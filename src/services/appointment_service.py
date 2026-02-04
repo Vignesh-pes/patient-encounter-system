@@ -2,8 +2,8 @@ from datetime import timedelta
 from sqlalchemy import and_, func
 from sqlalchemy.orm import Session
 
-from models.appointment import Appointment
-from models.doctor import Doctor
+from src.models.appointment import Appointment
+from src.models.doctor import Doctor
 
 
 def create_appointment(db: Session, data):

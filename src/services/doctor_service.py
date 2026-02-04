@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.doctor import Doctor
+from src.models.doctor import Doctor
 
 
 def create_doctor(db: Session, data):

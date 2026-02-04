@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from models.patient import Patient
+from src.models.patient import Patient
 
 
 def create_patient(db: Session, data):
