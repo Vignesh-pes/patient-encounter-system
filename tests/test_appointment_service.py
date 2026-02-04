@@ -2,9 +2,9 @@ import pytest
 from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock
 
-from services.appointment_service import create_appointment
-from schemas.appointment import AppointmentCreate
-from models.doctor import Doctor
+from src.services.appointment_service import create_appointment
+from src.schemas.appointment import AppointmentCreate
+from src.models.doctor import Doctor
 
 
 def test_appointment_start_time_in_past(db_session):

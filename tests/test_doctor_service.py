@@ -1,7 +1,7 @@
 import pytest
-from services.doctor_service import create_doctor, get_doctor
-from schemas.doctor import DoctorCreate
-from models.doctor import Doctor  # ✅ THIS WAS MISSING
+from src.services.doctor_service import create_doctor, get_doctor
+from src.schemas.doctor import DoctorCreate
+from src.models.doctor import Doctor  # ✅ THIS WAS MISSING
 
 
 def test_create_doctor(db_session):

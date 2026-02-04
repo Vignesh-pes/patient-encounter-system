@@ -2,15 +2,8 @@ from datetime import timedelta
 from sqlalchemy import and_, func
 from sqlalchemy.orm import Session
 
-try:
-    from models.appointment import Appointment
-    from models.doctor import Doctor
-except ModuleNotFoundError:
-    # Support environments where the package is importable as `src.*` (e.g., running via
-    # `uvicorn src.main:app`) and also where `src` is on PYTHONPATH so top-level
-    # `models` is available (tests).
-    from src.models.appointment import Appointment
-    from src.models.doctor import Doctor
+from ..models.appointment import Appointment
+from ..models.doctor import Doctor
 
 
 def create_appointment(db: Session, data):

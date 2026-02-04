@@ -1,4 +1,4 @@
-from models.appointment import Appointment
+from src.models.appointment import Appointment
 from datetime import datetime, timedelta, timezone
 
 

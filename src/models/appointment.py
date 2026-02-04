@@ -2,14 +2,8 @@ from sqlalchemy import Column, Integer, DateTime, func
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import timedelta
 
-# Support multiple import styles (tests import top-level `models`, app runs as `src`):
-try:
-    from database import Base
-except ModuleNotFoundError:
-    try:
-        from src.database import Base
-    except ModuleNotFoundError:
-        from ..database import Base
+# Use explicit import path for Base to avoid ambiguous import resolution
+from src.database import Base
 
 
 class Appointment(Base):

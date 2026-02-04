@@ -1,6 +1,6 @@
 import pytest
-from services.patient_service import create_patient, get_patient
-from schemas.patient import PatientCreate
+from src.services.patient_service import create_patient, get_patient
+from src.schemas.patient import PatientCreate
 from sqlalchemy.exc import IntegrityError
 
 
@@ -41,3 +41,21 @@ def test_get_patient_not_found(db_session):
 
     with pytest.raises(ValueError):
         get_patient(db_session, 1)
+
+
+def test_get_patient_success(db_session):
+    from src.models.patient import Patient
+
+    patient = Patient(
+        id=1,
+        first_name="Ada",
+        last_name="L",
+        email="ada@test.com",
+    )
+
+    db_session.query().filter().first.return_value = patient
+
+    result = get_patient(db_session, 1)
+
+    assert result.id == 1
+    assert result.email == "ada@test.com"

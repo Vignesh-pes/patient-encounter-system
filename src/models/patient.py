@@ -1,14 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql import func
 
-# Support multiple import styles (tests import top-level `models`, app runs as `src`):
-try:
-    from database import Base
-except ModuleNotFoundError:
-    try:
-        from src.database import Base
-    except ModuleNotFoundError:
-        from ..database import Base
+# Use explicit import path for Base to avoid ambiguous import resolution
+from src.database import Base
 
 
 class Patient(Base):
