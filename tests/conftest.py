@@ -1,18 +1,21 @@
 import sys
 from pathlib import Path
-from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock
 
-import pytest
-
-# ✅ Ensure src/ is on PYTHONPATH BEFORE imports
+# -------------------------------------------------------------------
+# Ensure src/ is on PYTHONPATH BEFORE any application imports
+# -------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SRC_PATH = PROJECT_ROOT / "src"
 
-if str(SRC_PATH) not in sys.path:
-    sys.path.insert(0, str(SRC_PATH))
+sys.path.insert(0, str(SRC_PATH))
 
-# ✅ Now imports will work AND Ruff is happy
+# -------------------------------------------------------------------
+# Standard imports (Ruff compliant)
+# -------------------------------------------------------------------
+import pytest
+from unittest.mock import MagicMock
+from datetime import datetime, timedelta, timezone
+
 from schemas.patient import PatientCreate
 from schemas.doctor import DoctorCreate
 from schemas.appointment import AppointmentCreate
@@ -36,7 +39,7 @@ def patient_data():
 @pytest.fixture
 def doctor_data():
     return DoctorCreate(
-        full_name="Dr. Strange",
+        full_name="Dr. Stephen Strange",
         specialization="Cardiology",
     )
 
