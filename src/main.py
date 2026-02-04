@@ -2,14 +2,14 @@ from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from datetime import date, datetime, time
 
-from src.database import get_db
-from src.schemas.patient import PatientCreate, PatientRead
-from src.schemas.doctor import DoctorCreate, DoctorRead
-from src.schemas.appointment import AppointmentCreate, AppointmentRead
-from src.services.patient_service import create_patient, get_patient
-from src.services.doctor_service import create_doctor, get_doctor
-from src.services.appointment_service import create_appointment
-from src.models.appointment import Appointment
+from .database import get_db
+from .schemas.patient import PatientCreate, PatientRead
+from .schemas.doctor import DoctorCreate, DoctorRead
+from .schemas.appointment import AppointmentCreate, AppointmentRead
+from .services.patient_service import create_patient, get_patient
+from .services.doctor_service import create_doctor, get_doctor
+from .services.appointment_service import create_appointment
+from .models.appointment import Appointment
 
 app = FastAPI(
     title="Medical Encounter Management System",

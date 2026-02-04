@@ -1,5 +1,9 @@
 from sqlalchemy.orm import Session
-from src.models.doctor import Doctor
+
+try:
+    from models.doctor import Doctor
+except ModuleNotFoundError:
+    from src.models.doctor import Doctor
 
 
 def create_doctor(db: Session, data):

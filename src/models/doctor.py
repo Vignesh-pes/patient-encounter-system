@@ -1,7 +1,14 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.sql import func
 
-from database import Base
+# Support multiple import styles (tests import top-level `models`, app runs as `src`):
+try:
+    from database import Base
+except ModuleNotFoundError:
+    try:
+        from src.database import Base
+    except ModuleNotFoundError:
+        from ..database import Base
 
 
 class Doctor(Base):

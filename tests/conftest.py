@@ -4,9 +4,18 @@ import pytest
 from unittest.mock import MagicMock
 from datetime import datetime, timedelta, timezone
 
-# Ensure `src` is on sys.path so tests can import project modules like `schemas` directly
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
+# Ensure both project root and `src` are on sys.path so imports work both
+# when modules are referenced as `src.*` and as top-level packages like `models`.
+ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+SRC_PATH = os.path.join(ROOT_PATH, "src")
+
+# Insert src and root so both import styles work when running tests
+sys.path.insert(0, SRC_PATH)
+sys.path.insert(0, ROOT_PATH)
+
+# Also set PYTHONPATH so child processes (e.g., uvicorn workers) inherit the paths
+os.environ["PYTHONPATH"] = os.pathsep.join(
+    filter(None, [SRC_PATH, ROOT_PATH, os.environ.get("PYTHONPATH", "")])
 )
 
 from schemas.patient import PatientCreate

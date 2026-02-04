@@ -1,7 +1,10 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from src.models.patient import Patient
+try:
+    from models.patient import Patient
+except ModuleNotFoundError:
+    from src.models.patient import Patient
 
 
 def create_patient(db: Session, data):
