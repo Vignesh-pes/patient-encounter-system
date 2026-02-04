@@ -25,7 +25,7 @@ def patient_data():
 @pytest.fixture
 def doctor_data():
     return DoctorCreate(
-        full_name="Dr. Stephen Strange",
+        full_name="Dr. Strange",
         specialization="Cardiology",
     )
 
