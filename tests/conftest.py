@@ -1,17 +1,3 @@
-import sys
-from pathlib import Path
-
-# -------------------------------------------------------------------
-# Ensure src/ is on PYTHONPATH BEFORE any application imports
-# -------------------------------------------------------------------
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SRC_PATH = PROJECT_ROOT / "src"
-
-sys.path.insert(0, str(SRC_PATH))
-
-# -------------------------------------------------------------------
-# Standard imports (Ruff compliant)
-# -------------------------------------------------------------------
 import pytest
 from unittest.mock import MagicMock
 from datetime import datetime, timedelta, timezone
