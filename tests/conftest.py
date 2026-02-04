@@ -17,9 +17,11 @@ os.environ["PYTHONPATH"] = os.pathsep.join(
     filter(None, [SRC_PATH, ROOT_PATH, os.environ.get("PYTHONPATH", "")])
 )
 
-from src.schemas.patient import PatientCreate
-from src.schemas.doctor import DoctorCreate
-from src.schemas.appointment import AppointmentCreate
+# These imports must appear after the sys.path adjustments above so they can
+# resolve in CI and local runs. Silence ruff E402 for this intentionally-placed import.
+from src.schemas.patient import PatientCreate  # noqa: E402
+from src.schemas.doctor import DoctorCreate  # noqa: E402
+from src.schemas.appointment import AppointmentCreate  # noqa: E402
 
 
 @pytest.fixture
