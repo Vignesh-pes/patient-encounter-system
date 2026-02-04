@@ -36,12 +36,11 @@ def test_conflicting_appointment(db_session):
 
     doctor = Doctor(id=1, is_active=True)
 
-    # 1st query → doctor exists
-    # 2nd query → conflict found
-    db_session.query().filter().first.side_effect = [
-        doctor,
-        MagicMock(),
-    ]
+    # Setup: doctor lookup → doctor exists
+    db_session.query().filter().first.return_value = doctor
+    # conflict lookup → return a conflicting appointment with required fields
+    conflict_appt = MagicMock(start_time=data.start_time, duration_minutes=30)
+    db_session.query().filter().all.return_value = [conflict_appt]
 
     with pytest.raises(ValueError, match="conflict"):
         create_appointment(db_session, data)
@@ -95,11 +94,9 @@ def test_create_appointment_success(db_session):
     doctor = Doctor(id=1, is_active=True)
 
     # doctor lookup → ok
+    db_session.query().filter().first.return_value = doctor
     # conflict lookup → none
-    db_session.query().filter().first.side_effect = [
-        doctor,
-        None,
-    ]
+    db_session.query().filter().all.return_value = []
 
     db_session.add.return_value = None
     db_session.commit.return_value = None

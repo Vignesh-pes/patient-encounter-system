@@ -1,4 +1,4 @@
-from datetime import timedelta, timezone
+from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 
 from src.models.appointment import Appointment
@@ -18,12 +18,14 @@ def create_appointment(db: Session, data):
         raise ValueError("start_time must be timezone-aware")
 
     # 3. Appointment must be in the future
-    now_utc = timezone.utc
-    if data.start_time <= data.start_time.astimezone(now_utc):
+    utc_tz = timezone.utc
+    now_utc = datetime.now(utc_tz)
+    start_utc = data.start_time.astimezone(utc_tz)
+    if start_utc <= now_utc:
         raise ValueError("Appointment must be in the future")
 
-    # 4. Compute new appointment window
-    new_start = data.start_time.astimezone(now_utc)
+    # 4. Compute new appointment window (in UTC)
+    new_start = start_utc
     new_end = new_start + timedelta(minutes=data.duration_minutes)
 
     # 5. Fetch existing appointments for doctor
@@ -34,9 +36,9 @@ def create_appointment(db: Session, data):
     # 6. Explicit overlap detection (evaluator-friendly)
     for appt in existing_appointments:
         existing_start = (
-            appt.start_time.replace(tzinfo=now_utc)
+            appt.start_time.replace(tzinfo=utc_tz)
             if appt.start_time.tzinfo is None
-            else appt.start_time.astimezone(now_utc)
+            else appt.start_time.astimezone(utc_tz)
         )
         existing_end = existing_start + timedelta(minutes=appt.duration_minutes)
 
