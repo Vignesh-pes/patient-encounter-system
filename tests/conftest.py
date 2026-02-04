@@ -1,6 +1,13 @@
+import os
+import sys
 import pytest
 from unittest.mock import MagicMock
 from datetime import datetime, timedelta, timezone
+
+# Ensure `src` is on sys.path so tests can import project modules like `schemas` directly
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
+)
 
 from schemas.patient import PatientCreate
 from schemas.doctor import DoctorCreate
