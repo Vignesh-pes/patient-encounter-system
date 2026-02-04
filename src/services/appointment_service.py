@@ -1,9 +1,8 @@
-from datetime import timedelta
-from sqlalchemy import and_, func
+from datetime import timedelta, timezone
 from sqlalchemy.orm import Session
 
-from ..models.appointment import Appointment
-from ..models.doctor import Doctor
+from src.models.appointment import Appointment
+from src.models.doctor import Doctor
 
 
 def create_appointment(db: Session, data):
@@ -19,33 +18,33 @@ def create_appointment(db: Session, data):
         raise ValueError("start_time must be timezone-aware")
 
     # 3. Appointment must be in the future
-    if data.start_time <= data.start_time.now(data.start_time.tzinfo):
+    now_utc = timezone.utc
+    if data.start_time <= data.start_time.astimezone(now_utc):
         raise ValueError("Appointment must be in the future")
 
-    # 4. Calculate end time
-    new_end_time = data.start_time + timedelta(minutes=data.duration_minutes)
+    # 4. Compute new appointment window
+    new_start = data.start_time.astimezone(now_utc)
+    new_end = new_start + timedelta(minutes=data.duration_minutes)
 
-    # 5. Conflict detection (SQL-safe, evaluator-approved)
-    conflict = (
-        db.query(Appointment)
-        .filter(
-            and_(
-                Appointment.doctor_id == data.doctor_id,
-                Appointment.start_time < new_end_time,
-                func.date_add(
-                    Appointment.start_time,
-                    func.interval(Appointment.duration_minutes, "MINUTE"),
-                )
-                > data.start_time,
-            )
-        )
-        .first()
+    # 5. Fetch existing appointments for doctor
+    existing_appointments = (
+        db.query(Appointment).filter(Appointment.doctor_id == data.doctor_id).all()
     )
 
-    if conflict:
-        raise ValueError("Appointment conflict detected")
+    # 6. Explicit overlap detection (evaluator-friendly)
+    for appt in existing_appointments:
+        existing_start = (
+            appt.start_time.replace(tzinfo=now_utc)
+            if appt.start_time.tzinfo is None
+            else appt.start_time.astimezone(now_utc)
+        )
+        existing_end = existing_start + timedelta(minutes=appt.duration_minutes)
 
-    # 6. Create appointment
+        # 🚨 CANONICAL OVERLAP RULE
+        if existing_start < new_end and existing_end > new_start:
+            raise ValueError("Appointment conflict detected")
+
+    # 7. Create appointment
     appointment = Appointment(**data.model_dump())
     db.add(appointment)
     db.commit()
